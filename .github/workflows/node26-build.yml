@@ -1,6 +1,8 @@
 name: Build Node 26 compatible v4.21.0
 
 on:
+  push:
+    branches: [test]
   workflow_dispatch:
 
 permissions:
