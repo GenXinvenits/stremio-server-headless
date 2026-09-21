@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 
 const file = 'server.js';
+// v4.21.0 Node 26 compatibility build
 let s = fs.readFileSync(file, 'utf8');
 
 const required = {
