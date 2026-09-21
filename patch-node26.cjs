@@ -9,6 +9,10 @@ const required = {
   urlParse: 'url.parse(',
 };
 
+if (!Object.values(required).some((needle) => s.includes(needle))) {
+  console.log('server.js is already patched for Node 26');
+  process.exit(0);
+}
 for (const [name, needle] of Object.entries(required)) {
   if (!s.includes(needle)) throw new Error('Expected Node 26 legacy API not found: ' + name);
 }
