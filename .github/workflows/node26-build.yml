@@ -1,0 +1,35 @@
+name: Build Node 26 compatible v4.21.0
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: test
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: Patch server.js
+        run: node patch-node26.cjs
+
+      - name: Syntax check
+        run: node --check server.js
+
+      - name: Commit patched build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add server.js
+          git diff --cached --quiet && exit 0
+          git commit -m "Make v4.21.0 server.js Node 26 compatible"
+          git push origin HEAD:test
